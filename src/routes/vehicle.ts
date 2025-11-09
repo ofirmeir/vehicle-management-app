@@ -11,6 +11,26 @@ const statusChange = (current?: string, next?: string): boolean => {
 };
 
 export const createVehicleRoutes = (app: Express) => {
+  /**
+   * @openapi
+   * /vehicles:
+   *   get:
+   *     summary: Get all vehicles
+   *     tags:
+   *       - Vehicles
+   *     responses:
+   *       200:
+   *         description: A list of vehicles
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 vehicles:
+   *                   type: array
+   *                   items:
+   *                     $ref: '#/components/schemas/Vehicle'
+   */
   app.get("/vehicles", async (req: Request, res: Response) => {
     const vehicles = await repository.getVehicles();
     res.json({
@@ -18,6 +38,30 @@ export const createVehicleRoutes = (app: Express) => {
     });
   });
 
+  /**
+   * @openapi
+   * /vehicles/{id}:
+   *   get:
+   *     summary: Get a vehicle by id
+   *     tags:
+   *       - Vehicles
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         required: true
+   *         schema:
+   *           type: integer
+   *     responses:
+   *       200:
+   *         description: A single vehicle
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 vehicle:
+   *                   $ref: '#/components/schemas/Vehicle'
+   */
   app.get("/vehicles/:id", async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
     const vehicle = await repository.getVehicle(id);
@@ -26,6 +70,35 @@ export const createVehicleRoutes = (app: Express) => {
     });
   });
 
+  /**
+   * @openapi
+   * /vehicles:
+   *   post:
+   *     summary: Create a new vehicle
+   *     tags:
+   *       - Vehicles
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               license_plate:
+   *                 type: string
+   *               status:
+   *                 type: string
+   *     responses:
+   *       200:
+   *         description: Created vehicle
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 vehicle:
+   *                   $ref: '#/components/schemas/Vehicle'
+   */
   app.post("/vehicles", async (req: Request, res: Response) => {
     const vehiclePayload = {
       license_plate: req.body.license_plate,
@@ -37,6 +110,43 @@ export const createVehicleRoutes = (app: Express) => {
     });
   });
 
+  /**
+   * @openapi
+   * /vehicles/{id}:
+   *   put:
+   *     summary: Update an existing vehicle
+   *     tags:
+   *       - Vehicles
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         required: true
+   *         schema:
+   *           type: integer
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               license_plate:
+   *                 type: string
+   *               status:
+   *                 type: string
+   *     responses:
+   *       200:
+   *         description: Updated vehicle
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 vehicle:
+   *                   $ref: '#/components/schemas/Vehicle'
+   *       400:
+   *         description: Invalid status transition
+   */
   app.put("/vehicles/:id", async (req: Request, res: Response) => {
     const id = parseInt(req.params.id);
 
