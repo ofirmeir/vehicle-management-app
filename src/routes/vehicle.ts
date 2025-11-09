@@ -31,22 +31,10 @@ export const createVehicleRoutes = (app: Express) => {
       license_plate: req.body.license_plate,
       status: req.body.status,
     };
-    try {
-      const vehicle = await repository.createVehicle(vehiclePayload);
-      res.json({
-        vehicle,
-      });
-    } catch (error) {
-      console.log(error);
-      res.status(400).json({
-        error: {
-          message:
-            error instanceof Error
-              ? error.message
-              : "There was an error creating a vehicle",
-        },
-      });
-    }
+    const vehicle = await repository.createVehicle(vehiclePayload);
+    res.json({
+      vehicle,
+    });
   });
 
   app.put("/vehicles/:id", async (req: Request, res: Response) => {
@@ -74,25 +62,13 @@ export const createVehicleRoutes = (app: Express) => {
       });
     }
 
-    try {
-      const vehicle = await repository.updateVehicle(
-        parseInt(req.params.id),
-        vehiclePayload,
-      );
-      res.json({
-        vehicle,
-      });
-    } catch (error) {
-      console.log(error);
-      res.status(400).json({
-        error: {
-          message:
-            error instanceof Error
-              ? error.message
-              : "There was an error updating the vehicle",
-        },
-      });
-    }
+    const vehicle = await repository.updateVehicle(
+      parseInt(req.params.id),
+      vehiclePayload,
+    );
+    res.json({
+      vehicle,
+    });
   });
 
   app.delete("/vehicles/:id", async (req: Request, res: Response) => {
