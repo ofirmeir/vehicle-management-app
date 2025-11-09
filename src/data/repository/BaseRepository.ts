@@ -12,6 +12,7 @@ export default class BaseRepository {
       dialect: "mysql",
       username: config.db.username,
       password: config.db.password,
+      models: [__dirname + "/../models"],
     });
   }
 }

@@ -7,10 +7,10 @@ const port = process.env.PORT || 3000;
 
 server.listen(port, async () => {
   try {
-    await repository.sequelizeClient.authenticate();
-    console.log("Database connection has been established successfully.");
+    await repository.sequelizeClient.sync();
+    console.log("Successfully migrated tables to the database.");
   } catch (error) {
-    console.log("Unable to connect to the database:");
+    console.log("Failed to migrate tables to the database");
     console.log(error);
   }
 
