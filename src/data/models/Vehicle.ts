@@ -4,6 +4,7 @@ import {
   InferCreationAttributes,
 } from "sequelize";
 import {
+  AllowNull,
   Column,
   CreatedAt,
   DataType,
@@ -28,11 +29,24 @@ export default class Vehicle extends Model<
   })
   declare id: CreationOptional<number>;
 
-  @Column
+  @AllowNull(false)
+  @Column({
+    validate: {
+      isIn: [["Available", "InUse", "Maintenance"]],
+    },
+    type: DataType.ENUM("Available", "InUse", "Maintenance"),
+  })
   declare status: string;
 
+  @AllowNull(false)
   @Unique
-  @Column
+  @Column({
+    validate: {
+      is: /^[A-Z0-9]{1,6}$/i,
+      len: [1, 6],
+    },
+    type: DataType.STRING(10),
+  })
   declare license_plate: string;
 
   @CreatedAt
