@@ -14,12 +14,15 @@ const options = {
           type: "object",
           properties: {
             id: { type: "integer", example: 1 },
-            license_plate: { type: "string", example: "ABC-123" },
-            status: { type: "string", example: "Available" }
-          }
-        }
-      }
-    }
+            license_plate: {
+              type: "string",
+              example: "ABC123",
+            },
+            status: { type: "string", example: "Available" },
+          },
+        },
+      },
+    },
   },
   // files containing annotations as above
   apis: ["./src/routes/*.ts"],

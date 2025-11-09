@@ -86,6 +86,7 @@ export const createVehicleRoutes = (app: Express) => {
    *             properties:
    *               license_plate:
    *                 type: string
+   *                 example: "ABC123"
    *               status:
    *                 type: string
    *     responses:
@@ -132,6 +133,7 @@ export const createVehicleRoutes = (app: Express) => {
    *             properties:
    *               license_plate:
    *                 type: string
+   *                 example: "ABC123"
    *               status:
    *                 type: string
    *     responses:
