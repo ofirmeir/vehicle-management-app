@@ -72,7 +72,26 @@ export const createVehicleRoutes = (app: Express) => {
   });
 
   app.delete("/vehicles/:id", async (req: Request, res: Response) => {
-    const result = await repository.deleteVehicle(parseInt(req.params.id));
+    const id = parseInt(req.params.id);
+
+    // fetch existing vehicle to ensure it exists and check status
+    const existing = await repository.getVehicle(id);
+    if (!existing) {
+      return res.status(404).json({
+        error: { message: "Vehicle not found" },
+      });
+    }
+
+    // only allow deletion when status is 'Available'
+    if (existing.status !== "Available") {
+      return res.status(400).json({
+        error: {
+          message: `Only vehicles with status 'Available' can be deleted. Current status: '${existing.status}'`,
+        },
+      });
+    }
+
+    const result = await repository.deleteVehicle(id);
     res.json({
       vehicle_deleted: result,
     });
