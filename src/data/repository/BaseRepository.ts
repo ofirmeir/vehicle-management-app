@@ -3,6 +3,7 @@ import config from "../../config";
 
 export default class BaseRepository {
   sequelizeClient: Sequelize;
+  defaultLimit = 100;
 
   constructor() {
     this.sequelizeClient = new Sequelize({
@@ -16,3 +17,5 @@ export default class BaseRepository {
     });
   }
 }
+
+export type Constructor<T = {}> = new (...args: any[]) => T;

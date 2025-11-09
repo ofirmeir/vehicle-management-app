@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import morgan from "morgan";
 import cors from "cors";
+import { createRoutes } from "./routes";
 
 export const createServer = () => {
   const app = express();
@@ -14,5 +15,7 @@ export const createServer = () => {
     app.use(express.urlencoded());
   });
 
+  createRoutes(app);
+  
   return app;
 };

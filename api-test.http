@@ -1,2 +1,29 @@
 ### HEALTH CHECK
 GET http://localhost:3000/health HTTP/1.1
+
+### GET ALL VEHICLES
+GET http://localhost:3000/vehicles HTTP/1.1
+
+### GET A VEHICLE BY ID
+GET http://localhost:3000/vehicles/1 HTTP/1.1
+
+### CREATE A NEW VEHICLE
+POST http://localhost:3000/vehicles HTTP/1.1
+Content-Type: application/json
+
+{
+  "license_plate": "XYZ123",
+  "status": "Available"
+}
+
+### UPDATE A VEHICLE BY ID
+PUT http://localhost:3000/vehicles/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "license_plate": "XYZ123",
+  "status": "InUse"
+}
+
+### DELETE A VEHICLE BY ID
+DELETE http://localhost:3000/vehicles/1 HTTP/1.1
